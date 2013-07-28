@@ -14,7 +14,7 @@ namespace SecondRealipony
 
         bool VideoMode = false;
         double VideoFrameRate = 60D; //60000D/1001D;
-        string VideoPath = @"D:\temp";
+        string VideoPath = @"C:\temp";
         string AudacityProjectFile = "Final Mix.aup";
 
         int FrameNumber = 0;
@@ -31,8 +31,8 @@ namespace SecondRealipony
             graphics.IsFullScreen = false;
             if (graphics.IsFullScreen)
             {
-                graphics.PreferredBackBufferWidth = 1600;
-                graphics.PreferredBackBufferHeight = 1200;
+                graphics.PreferredBackBufferWidth = 1280;
+                graphics.PreferredBackBufferHeight = 720;
             }
             else if (VideoMode)
             {
@@ -70,8 +70,7 @@ namespace SecondRealipony
         protected override void LoadContent()
         {
             segments = new SRSegment[] {
-                new Applejack(this),
-                /*new Intro(this),
+                new Intro(this),
                 new Title(this),
                 new Twilight(this),
                 new Rarity(this),
@@ -91,7 +90,7 @@ namespace SecondRealipony
                 new World(this),
                 new Thanks(this),
                 new Credits(this),
-                new End(this)*/
+                new End(this)
             };
 
             if (VideoMode)
