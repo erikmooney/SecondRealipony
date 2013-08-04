@@ -8,6 +8,13 @@ It is written in C# using the Microsoft XNA game development engine.
 The code may be reused and redistributed as per the included MIT License.  The artwork assets are NOT included in this license and may NOT be reused or redistributed without permission from the original artists.  See my page at http://www.dos486.com/secondrealipony for a list of the artwork and artists.
 
 
+NOTICE - EXECUTABLE VERSION COMING
+==================================
+
+Thanks for all your support!  By popular demand, I will be working on a proper executable version.  Anyone who wants to help with hardware testing, or knows anything about XNA compiling and packaging, please let me know if you'd like to help.
+
+
+
 REQUIREMENTS
 ============
 
