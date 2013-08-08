@@ -7,12 +7,13 @@ It is written in C# using the Microsoft XNA game development engine.
 
 The code may be reused and redistributed as per the included MIT License.  The artwork assets are NOT included in this license and may NOT be reused or redistributed without permission from the original artists.  See my page at http://www.dos486.com/secondrealipony for a list of the artwork and artists.
 
+MP3 renderings of the original music from Second Reality are included here.  The source and assets of Second Reality were published under Unlicense at https://github.com/mtuomi/SecondReality so it appears the music is free to use.  Contact Mika Tuomi (Trug) or others in Future Crew for any questions regarding music usage or reproduction.
+
 
 NOTICE - EXECUTABLE VERSION COMING
 ==================================
 
 Thanks for all your support!  By popular demand, I will be working on a proper executable version.  Anyone who wants to help with hardware testing, or knows anything about XNA compiling and packaging, please let me know if you'd like to help.
-
 
 
 REQUIREMENTS
@@ -23,12 +24,6 @@ Microsoft Visual Studio 2010.  I used the free C# Express edition for developmen
 Microsoft XNA Game Studio 4.0.
 
 1 GB memory available.  The program loads and precalculates lots of textures and geometry, which take up a lot of space.
-
-
-MUSIC
-=====
-
-I have chosen NOT to include Future Crew's original music, for reasons of copyright and also file size.  Included are just very short placeholder .wav files with the same names, so that the code can run.  For any projects derived from this, you will need to supply your own music.
 
 
 CODE LAYOUT
