@@ -5,16 +5,16 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace SecondRealipony
 {
     abstract class SRSegment
     {
         protected GraphicsDevice device;
-        protected SoundEffect music;
-        protected SoundEffectInstance musicInstance;
         protected bool musicStarted = false;
-
+        protected Song song;
+        
         public float Beat { get; protected set; }
 
         //Most segments are 130bpm, so specify this here unless overridden
@@ -38,8 +38,7 @@ namespace SecondRealipony
         public SRSegment(Game game)
         {
             device = game.GraphicsDevice;
-            music = game.Content.Load<SoundEffect>("music/" + MusicName);
-            musicInstance = music.CreateInstance();
+            song = game.Content.Load<Song>("music/" + MusicName);
         }
 
         public bool IsComplete(TimeSpan span)
@@ -53,7 +52,7 @@ namespace SecondRealipony
 
             if (!musicStarted && Beat + Anacrusis >= MusicDelay)
             {
-                musicInstance.Play();
+                MediaPlayer.Play(song);
                 musicStarted = true;
             }
 
