@@ -145,6 +145,14 @@ namespace SecondRealipony
             }
 
             GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.Black);
+
+            // Ask current segment if it is ready (done with any precalculating).  If not, wait.
+            if (!currentSegment.IsReady)
+            {
+                SegmentStartTime = VideoMode ? GetTimespan(FrameNumber, VideoFrameRate) : gameTime.TotalGameTime;
+                return;
+            }
+
             currentSegment.Draw(span);
 
             if (VideoMode)

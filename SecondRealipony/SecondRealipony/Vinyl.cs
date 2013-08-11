@@ -17,21 +17,17 @@ namespace SecondRealipony
         Texture2D contours;
         Texture2D vinyl;
         const int STEPS = 8;
-        Thread TextureThread;
 
         public Vinyl(Game game)
             : base(game)
         {
             //Create the textures asynchronously!  Because this takes a while
-            TextureThread = new Thread(new ThreadStart(CreateTextures));
-            TextureThread.Priority = ThreadPriority.Lowest;
-            TextureThread.Start();
+            StartupThread = new Thread(new ThreadStart(CreateTextures));
+            StartupThread.Priority = ThreadPriority.Lowest;
+            StartupThread.Start();
 
             contours = game.Content.Load<Texture2D>("vinyl contours.png");
             vinyl = game.Content.Load<Texture2D>("vinyl head.png");
-
-            //Wait for texture creation to complete
-            //while (TextureThread.IsAlive) ;
         }
 
         private void CreateTextures()

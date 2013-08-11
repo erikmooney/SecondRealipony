@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
@@ -57,6 +58,15 @@ namespace SecondRealipony
             derpy = game.Content.Load<Texture2D>("derpy.png");
 
             basicEffect = new BasicEffect(device);
+
+            //Do the precalculating asynchronously
+            StartupThread = new Thread(new ThreadStart(Precalculate));
+            StartupThread.Priority = ThreadPriority.Lowest;
+            StartupThread.Start();
+        }
+
+        private void Precalculate()
+        {
             CreateGeometry();
             CreatePrerender();
         }

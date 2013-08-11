@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using System.Threading;
 
 namespace SecondRealipony
 {
@@ -14,6 +15,7 @@ namespace SecondRealipony
         protected GraphicsDevice device;
         protected bool musicStarted = false;
         protected Song song;
+        protected Thread StartupThread;
         
         public float Beat { get; protected set; }
 
@@ -44,6 +46,15 @@ namespace SecondRealipony
         public bool IsComplete(TimeSpan span)
         {
             return span.TotalSeconds > (EndBeat + Anacrusis) * BeatLength;
+        }
+
+        //Lets the controller ask whether the segment is still precalculating
+        public bool IsReady
+        {
+            get
+            {
+                return StartupThread == null || !StartupThread.IsAlive;
+            }
         }
         
         public void Draw(TimeSpan span)

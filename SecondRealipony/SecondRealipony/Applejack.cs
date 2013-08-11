@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
@@ -38,7 +39,10 @@ namespace SecondRealipony
             basicEffect = new BasicEffect(device);
             blacktexture = Get1x1Texture(Color.Black);
 
-            CreateGeometry();
+            //Do the precalculating asynchronously
+            StartupThread = new Thread(new ThreadStart(CreateGeometry));
+            StartupThread.Priority = ThreadPriority.Lowest;
+            StartupThread.Start();
         }
 
         private void CreateGeometry()
