@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace SecondRealipony
 {
@@ -16,6 +17,7 @@ namespace SecondRealipony
         double VideoFrameRate = 60D; //60000D/1001D;
         string VideoPath = @"C:\temp";
         string AudacityProjectFile = "Final Mix.aup";
+        string[] args;
 
         int FrameNumber = 0;
         int FrameOffset = 0;
@@ -25,7 +27,7 @@ namespace SecondRealipony
         TimeSpan SegmentStartTime;
         SRRenderer renderer;
 
-        public SRController()
+        public SRController(string[] args)
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.IsFullScreen = false;
@@ -50,6 +52,60 @@ namespace SecondRealipony
             Content.RootDirectory = "Content";
             IsFixedTimeStep = !VideoMode;
             renderer = new SRRenderer(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight, VideoPath, VideoFrameRate);
+
+            this.args = args;
+        }
+
+        public string ParseCommandLine(string[] args)
+        {
+            var sequence = "abcdefghijklmnopqrstu";
+
+            if (args.Length == 0)
+                return sequence;
+
+            if (args[0].Any(c => !sequence.Contains(c)))
+            {
+                System.Console.WriteLine("Invalid scene specification.  Valid characters are 'a' through 'u'.");
+                this.Exit();
+            }
+
+            return args[0];
+        }
+
+        public int[] GetSegmentIndices(string input)
+        {
+            return input.Select(c => (int)c - (int)'a').ToArray();
+        }
+
+        public Type[] GetSegmentTypes(string input)
+        {
+            var SegmentOrder = new Type[] {
+                typeof(Intro),
+                typeof(Title),
+                typeof(Twilight),
+                typeof(Rarity),
+                typeof(Vinyl),
+                typeof(GetDown),
+                typeof(Rainbow),
+                typeof(EndFirstHalf),
+                typeof(Fluttershy),
+                typeof(Applejack),
+                typeof(Cmc),
+                typeof(Cube),
+                typeof(Pinkie),
+                typeof(Derpy),
+                typeof(Waves),
+                typeof(EndSecondHalf),
+                typeof(WorldStart),
+                typeof(World),
+                typeof(Thanks),
+                typeof(Credits),
+                typeof(End)
+            };
+
+            int[] indices = GetSegmentIndices(input);
+            Type[] result = indices.Select(i => SegmentOrder[i]).ToArray();
+            return result;
         }
 
         /// <summary>
@@ -69,30 +125,10 @@ namespace SecondRealipony
         /// </summary>
         protected override void LoadContent()
         {
-            segments = new SRSegment[] {
-                new Intro(this),
-                new Title(this),
-                new Twilight(this),
-                new Rarity(this),
-                new Vinyl(this),
-                new GetDown(this),
-                new Rainbow(this),
-                new EndFirstHalf(this),
-                new Fluttershy(this),
-                new Applejack(this),
-                new Cmc(this),
-                new Cube(this),
-                new Pinkie(this),
-                new Derpy(this),
-                new Waves(this),
-                new EndSecondHalf(this),
-                new WorldStart(this),
-                new World(this),
-                new Thanks(this),
-                new Credits(this),
-                new End(this)
-            };
-
+            //This instantiates all the segments, and they all load their content in their constructors
+            var types = GetSegmentTypes(ParseCommandLine(args));
+            segments = types.Select(T => (SRSegment)Activator.CreateInstance(T, this)).ToArray();
+            
             if (VideoMode)
                 renderer.WriteMusicTimes(segments, AudacityProjectFile);
         }

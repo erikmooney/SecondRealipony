@@ -10,7 +10,7 @@ namespace SecondRealipony
         /// </summary>
         static void Main(string[] args)
         {
-            using (SRController game = new SRController())
+            using (SRController game = new SRController(args))
             {
                 game.Run();
             }
