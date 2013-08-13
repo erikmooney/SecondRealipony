@@ -41,6 +41,10 @@ namespace SecondRealipony
         {
             device = game.GraphicsDevice;
             song = game.Content.Load<Song>("music/" + MusicName);
+            
+            ///Workaround to preload songs in the media player 
+            MediaPlayer.Play(song);
+            MediaPlayer.Pause();
         }
 
         public bool IsComplete(TimeSpan span)
