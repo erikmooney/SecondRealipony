@@ -10,14 +10,45 @@ The code may be reused and redistributed as per the included MIT License.  The a
 MP3 renderings of the original music from Second Reality are included here.  The source and assets of Second Reality were published under Unlicense at https://github.com/mtuomi/SecondReality so it appears the music is free to use.  Contact Mika Tuomi (Trug) or others in Future Crew for any questions regarding music usage or reproduction.
 
 
-NOTICE - EXECUTABLE VERSION COMING
-==================================
+COMPILED RELEASE
+================
 
-Thanks for all your support!  By popular demand, I will be working on a proper executable version.  Anyone who wants to help with hardware testing, or knows anything about XNA compiling and packaging, please let me know if you'd like to help.
+See http://www.dos486.com/secondrealipony for a compiled executable version.  For issues and comments, email me or raise on Github.
 
 
-REQUIREMENTS
-============
+COMMAND LINE SUPPORT
+====================
+
+Second Realipony accepts a string on the command line to specify a list of particular scenes.  This can be used for testing or troubleshooting or just to watch a favorite scene.  Each scene is represented by a single lowercase letter:
+
+a - Introduction
+b - Title screen
+c - Twilight Sparkle and the bouncing bookahedron
+d - Rarity and the gems dot tunnel
+e - Vinyl Scratch and the interference moire lines
+f - "Get Down"
+g - Rainbow Dash and the rainbow techno light show
+h - Shining Armor picture
+i - Fluttershy and the text scroller
+j - Applejack and the apple lens and rotozoomer
+k - Cutie Mark Crusaders and the plasma
+l - Cutie marks animated on the cube
+m - Pinkie Pie with party cannon and the vector bobs
+n - Derpy Hooves and the reflective raytracing
+o - Wonderbolts and the waves
+p - Princess Celestia bouncing picture
+q - Beginning of city world scene (fade to white)
+r - City world virtual reality scene (prerendered video)
+s - Special Thanks picture
+t - Credits
+u - End scroller
+
+Thus, running SecondRealipony.exe dggr would run only the scenes with Twilight, Rainbow Dash (twice), and the city world.
+
+
+
+DEVELOPMENT REQUIREMENTS
+========================
 
 Microsoft Visual Studio 2010.  I used the free C# Express edition for development.  Professional and higher versions should also work.
 
@@ -35,7 +66,7 @@ SRSegment is an abstract base class from which all the segments derive.  This cl
 
 Each segment of the demo resides in its own C# class that derives from SRSegment.  Each of these segments is self-contained with all its own animation and display logic.
 
-World.cs is a special case.  It just displays a placeholder image.  In Second Realipony, this scene was rendered from Source Filmmaker instead and later stitched into the final video.  The C# class for World.cs is just here to preserve the timing and flow with regards to the frame count and music playing.
+World.cs is a special case.  It just plays a prerendered video.  In Second Realipony, this scene was rendered from Source Filmmaker instead and later stitched into the final video.
 
 
 VIDEO RENDERING
