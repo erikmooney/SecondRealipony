@@ -99,6 +99,7 @@ namespace SecondRealipony
             var skewBeat = (Beat < 16) ? 0 : GetSkewBeat((Beat - 16), 2);
             var rotation = 0.5F * (float)-Math.Sin(skewBeat * MathHelper.PiOver2);
             var scale = 1.4F - 0.4F * (float)Math.Cos(skewBeat * Math.PI);
+            scale = scale * device.Viewport.Height / 720;
 
             var batch = new SpriteBatch(device);
             batch.Begin(SpriteSortMode.Immediate, InvertBlendState);

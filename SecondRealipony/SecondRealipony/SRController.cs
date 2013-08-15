@@ -17,11 +17,11 @@ namespace SecondRealipony
         double VideoFrameRate = 60D; //60000D/1001D;
         string VideoPath = @"C:\temp";
         string AudacityProjectFile = "Final Mix.aup";
-        string[] args;
 
         int FrameNumber = 0;
         int FrameOffset = 0;
         int SegmentNumber = 0;
+        Type[] segmentTypes;
         SRSegment[] segments;
         SRSegment currentSegment { get { return SegmentNumber < segments.Length ? segments[SegmentNumber] : null; } }
         TimeSpan SegmentStartTime;
@@ -29,22 +29,19 @@ namespace SecondRealipony
 
         public SRController(string[] args)
         {
+            var parameters = ParseCommandLine(args);
+
             graphics = new GraphicsDeviceManager(this);
             graphics.IsFullScreen = false;
-            if (graphics.IsFullScreen)
-            {
-                graphics.PreferredBackBufferWidth = 1280;
-                graphics.PreferredBackBufferHeight = 720;
-            }
-            else if (VideoMode)
+            if (VideoMode)
             {
                 graphics.PreferredBackBufferWidth = 1280;
                 graphics.PreferredBackBufferHeight = 720;
             }
             else
             {
-                graphics.PreferredBackBufferWidth = 1280;
-                graphics.PreferredBackBufferHeight = 720;
+                graphics.PreferredBackBufferWidth = parameters.Item1;
+                graphics.PreferredBackBufferHeight = parameters.Item2;
             }
             graphics.PreferMultiSampling = true;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
@@ -53,32 +50,53 @@ namespace SecondRealipony
             IsFixedTimeStep = !VideoMode;
             renderer = new SRRenderer(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight, VideoPath, VideoFrameRate);
 
-            this.args = args;
+            segmentTypes = parameters.Item3;
         }
 
-        public string ParseCommandLine(string[] args)
+        public Tuple<int, int, Type[]> ParseCommandLine(string[] args)
         {
-            var sequence = "abcdefghijklmnopqrstu";
+            int width = 0;
+            int height = 0;
+            Type[] segmentTypes = null;
+            char[] validSegments = Enumerable.Range(0, GetStandardSegmentOrder().Length).Select(i => (char)(i + (int)'a')).ToArray();
 
-            if (args.Length == 0)
-                return sequence;
-
-            if (args[0].Any(c => !sequence.Contains(c)))
+            bool widthSet = false;
+            foreach (string arg in args)
             {
-                throw new ArgumentException("Invalid scene specification.  Valid characters are 'a' through 'u'.");
+                if (arg.All(c => char.IsDigit(c)))
+                {
+                    if (!widthSet)
+                        width = int.Parse(arg);
+                    else
+                        height = int.Parse(arg);
+                    widthSet = !widthSet;
+                }
+                else if (arg.All(c => validSegments.Contains(c)))
+                    segmentTypes = GetSegmentTypes(arg);
             }
 
-            return args[0];
+            if (width == 0)
+                width = 1280;
+
+            if (height == 0)
+                height = width * 9 / 16;
+
+            //If the height exactly matches screen height, subtract a bit to leave room for the title bar so the window doesn't extend offscreen and hurt performance
+            if (height == GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height)
+            {
+                width -= 48 * width / height;
+                height -= 48;
+            }
+
+            if (segmentTypes == null)
+                segmentTypes = GetStandardSegmentOrder();
+
+            return new Tuple<int, int, Type[]>(width, height, segmentTypes);
         }
 
-        public int[] GetSegmentIndices(string input)
+        public Type[] GetStandardSegmentOrder()
         {
-            return input.Select(c => (int)c - (int)'a').ToArray();
-        }
-
-        public Type[] GetSegmentTypes(string input)
-        {
-            var SegmentOrder = new Type[] {
+            return new Type[] {
                 typeof(Intro),
                 typeof(Title),
                 typeof(Twilight),
@@ -101,9 +119,17 @@ namespace SecondRealipony
                 typeof(Credits),
                 typeof(End)
             };
+        }
 
+        public int[] GetSegmentIndices(string input)
+        {
+            return input.Select(c => (int)c - (int)'a').ToArray();
+        }
+
+        public Type[] GetSegmentTypes(string input)
+        {
             int[] indices = GetSegmentIndices(input);
-            Type[] result = indices.Select(i => SegmentOrder[i]).ToArray();
+            Type[] result = indices.Select(i => GetStandardSegmentOrder()[i]).ToArray();
             return result;
         }
 
@@ -125,15 +151,7 @@ namespace SecondRealipony
         protected override void LoadContent()
         {
             //This instantiates all the segments, and they all load their content in their constructors
-            try
-            {
-                var types = GetSegmentTypes(ParseCommandLine(args));
-                segments = types.Select(T => (SRSegment)Activator.CreateInstance(T, this)).ToArray();
-            }
-            catch (ArgumentException)
-            {
-                this.Exit();
-            }
+            segments = segmentTypes.Select(T => (SRSegment)Activator.CreateInstance(T, this)).ToArray();
             
             if (VideoMode)
                 renderer.WriteMusicTimes(segments, AudacityProjectFile);

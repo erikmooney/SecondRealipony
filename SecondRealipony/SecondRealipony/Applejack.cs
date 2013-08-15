@@ -255,9 +255,10 @@ namespace SecondRealipony
             device.SamplerStates[0] = SamplerState.LinearWrap;
 
             var batch = new SpriteBatch(device);
-            var SourceRectangle = new Rectangle(0, 0, applejack.Width * 32, applejack.Height * 32);
             var ScreenOrigin = new Vector2(0, ScreenCenter.Y);
-            var TextureOrigin = new Vector2(applejack.Width * 16, applejack.Height * 16.5F);
+
+            var SourceRectangle = new Rectangle(0, 0, applejack.Width * (Beat < 36 ? 1 : 32), applejack.Height * (Beat < 36 ? 1 : 32));
+            var TextureOrigin = new Vector2(Beat < 36 ? 0 : applejack.Width * 16, Beat < 36 ? applejack.Height * 0.5F : applejack.Height * 16.5F);
 
             SortedDictionary<float, float> phases = new SortedDictionary<float, float>();
             phases.Add(-Anacrusis, 0);
