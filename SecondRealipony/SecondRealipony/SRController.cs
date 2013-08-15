@@ -65,8 +65,7 @@ namespace SecondRealipony
 
             if (args[0].Any(c => !sequence.Contains(c)))
             {
-                System.Console.WriteLine("Invalid scene specification.  Valid characters are 'a' through 'u'.");
-                this.Exit();
+                throw new ArgumentException("Invalid scene specification.  Valid characters are 'a' through 'u'.");
             }
 
             return args[0];
@@ -126,8 +125,15 @@ namespace SecondRealipony
         protected override void LoadContent()
         {
             //This instantiates all the segments, and they all load their content in their constructors
-            var types = GetSegmentTypes(ParseCommandLine(args));
-            segments = types.Select(T => (SRSegment)Activator.CreateInstance(T, this)).ToArray();
+            try
+            {
+                var types = GetSegmentTypes(ParseCommandLine(args));
+                segments = types.Select(T => (SRSegment)Activator.CreateInstance(T, this)).ToArray();
+            }
+            catch (ArgumentException)
+            {
+                this.Exit();
+            }
             
             if (VideoMode)
                 renderer.WriteMusicTimes(segments, AudacityProjectFile);
