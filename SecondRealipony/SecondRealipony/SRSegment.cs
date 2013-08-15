@@ -60,6 +60,13 @@ namespace SecondRealipony
                 return StartupThread == null || !StartupThread.IsAlive;
             }
         }
+
+        //Lets the controller abort precalculation background thread, for exiting cleanly
+        public void AbortThreads()
+        {
+            if (StartupThread != null && StartupThread.IsAlive)
+                StartupThread.Abort();
+        }
         
         public void Draw(TimeSpan span)
         {

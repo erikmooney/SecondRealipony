@@ -155,7 +155,7 @@ namespace SecondRealipony
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
             base.Update(gameTime);
@@ -220,6 +220,16 @@ namespace SecondRealipony
             viewport.Width = GraphicsDevice.PresentationParameters.BackBufferWidth;
             viewport.Height = GraphicsDevice.PresentationParameters.BackBufferHeight;
             GraphicsDevice.Viewport = viewport;
+        }
+
+        protected override void OnExiting(object sender, EventArgs args)
+        {
+            foreach (var segment in segments)
+            {
+                segment.AbortThreads();
+            }
+
+            base.OnExiting(sender, args);
         }
     }
 }
