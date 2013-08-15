@@ -19,7 +19,7 @@ See http://www.dos486.com/secondrealipony for a compiled executable version.  Fo
 COMMAND LINE SUPPORT
 ====================
 
-You can specify window size by height and width on the command line.  Example: SecondRealipony.exe 1920 1080
+You can specify window size by width and height on the command line.  Example: SecondRealipony.exe 1920 1080
 
 Use 16:9 aspect ratio for best results.  It will work in other aspects but some of the graphics will be stretched or otherwise not look right.
 
@@ -27,6 +27,7 @@ If the specified height is equal to your screen height, the program will subtrac
 
 Second Realipony accepts a string on the command line to specify a list of particular scenes.  This can be used for testing or troubleshooting or just to watch a favorite scene.  Each scene is represented by a single lowercase letter:
 
+```
 a - Introduction
 b - Title screen
 c - Twilight Sparkle and the bouncing bookahedron
@@ -48,6 +49,7 @@ r - City world virtual reality scene (prerendered video)
 s - Special Thanks picture
 t - Credits
 u - End scroller
+```
 
 Thus, running SecondRealipony.exe dggr would run only the scenes with Twilight, Rainbow Dash (twice), and the city world.
 
