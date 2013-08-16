@@ -24,6 +24,7 @@ namespace SecondRealipony
         public override float Anacrusis { get { return 2; } }
         public override float EndBeat { get { return 40; } }
         public override string MusicName { get { return "rarity.wav"; } }
+        public override double MusicCue { get { return 95.65; } }
 
         public Rarity(Game game)
             : base(game)

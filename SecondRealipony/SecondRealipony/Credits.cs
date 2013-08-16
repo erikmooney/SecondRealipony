@@ -12,6 +12,7 @@ namespace SecondRealipony
         public override float EndBeat { get { return texts.Length * BEATS;  } }
         public override string MusicName { get { return "Credits.wav"; } }
         public override float BeatLength { get { return 60F / 125F; } }
+        public override double MusicCue { get { return 483.08; } }
 
         Texture2D credits;
         SpriteFont calibri;

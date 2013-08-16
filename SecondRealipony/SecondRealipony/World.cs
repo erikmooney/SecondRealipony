@@ -13,6 +13,7 @@ namespace SecondRealipony
         public override float EndBeat { get { return 106; } }
         public override string MusicName { get { return "World.wav"; } }
         public override float BeatLength { get { return 60F / 125F; } }
+        public override double MusicCue { get { return 424.516666; } }
         VideoPlayer videoPlayer;
         Video video;
 

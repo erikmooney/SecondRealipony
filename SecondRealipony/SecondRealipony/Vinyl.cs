@@ -12,6 +12,7 @@ namespace SecondRealipony
     {
         public override float EndBeat { get { return 32; } }
         public override string MusicName { get { return "vinyl.wav"; } }
+        public override double MusicCue { get { return 115.05; } }
 
         Texture2D[] Circles;
         Texture2D contours;

@@ -23,6 +23,7 @@ namespace SecondRealipony
 
         public override float EndBeat { get { return 62; } }
         public override string MusicName { get { return "fluttershy.wav"; } }
+        public override double MusicCue { get { return 174.15; } }
 
         public Fluttershy(Game game)
             : base(game)

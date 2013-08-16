@@ -13,6 +13,7 @@ namespace SecondRealipony
         public override float Anacrusis { get { return 2; } }
         public override float EndBeat { get { return 28; } }
         public override string MusicName { get { return "EndFirstHalf.wav"; } }
+        public override double MusicCue { get { return 160.3333333; } }
 
         public EndFirstHalf(Game game) : base(game)
         {

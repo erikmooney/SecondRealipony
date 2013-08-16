@@ -11,6 +11,7 @@ namespace SecondRealipony
     {
         public override float EndBeat { get { return 80; } }
         public override string MusicName { get { return "pinkie.wav"; } }
+        public override double MusicCue { get { return 316.333333; } }
 
         AlphaTestEffect alphaTestEffect;
         BasicEffect basicEffect;

@@ -16,6 +16,7 @@ namespace SecondRealipony
 
         public override float EndBeat { get { return 4; } }
         public override string MusicName { get { return "getdown.wav"; } }
+        public override double MusicCue { get { return 129.8333333; } }
 
         public GetDown(Game game)
             : base(game)

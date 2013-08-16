@@ -12,6 +12,7 @@ namespace SecondRealipony
     {
         public override float EndBeat { get { return 64; } }
         public override string MusicName { get { return "derpy.wav"; } }
+        public override double MusicCue { get { return 353.266666; } }
 
         BasicEffect basicEffect;
 

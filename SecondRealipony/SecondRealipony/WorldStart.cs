@@ -12,6 +12,7 @@ namespace SecondRealipony
         public override float EndBeat { get { return 8; } }
         public override string MusicName { get { return "WorldStart.wav"; } }
         public override float BeatLength { get { return 60F / 125F; } }
+        public override double MusicCue { get { return 420.666666; } }
 
         Texture2D picture;
 

@@ -12,6 +12,7 @@ namespace SecondRealipony
         public override float EndBeat { get { return 32; } }
         public override string MusicName { get { return "End.wav"; } }
         public override float BeatLength { get { return 60F / 125F; } }
+        public override double MusicCue { get { return 592.533333; } }
 
         SpriteFont bookman;
         string finalscroller;

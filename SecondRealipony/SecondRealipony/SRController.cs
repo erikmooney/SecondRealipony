@@ -26,6 +26,7 @@ namespace SecondRealipony
         SRSegment currentSegment { get { return SegmentNumber < segments.Length ? segments[SegmentNumber] : null; } }
         TimeSpan SegmentStartTime;
         SRRenderer renderer;
+        protected WMPLib.WindowsMediaPlayer mediaPlayer;
 
         public SRController(string[] args)
         {
@@ -152,9 +153,19 @@ namespace SecondRealipony
         {
             //This instantiates all the segments, and they all load their content in their constructors
             segments = segmentTypes.Select(T => (SRSegment)Activator.CreateInstance(T, this)).ToArray();
-            
+
+            LoadMusic();
+
             if (VideoMode)
                 renderer.WriteMusicTimes(segments, AudacityProjectFile);
+        }
+
+        private void LoadMusic()
+        {
+            mediaPlayer = new WMPLib.WindowsMediaPlayer();
+            mediaPlayer.settings.volume = 0;
+            mediaPlayer.URL = "Content/Final Mix.wma";
+            mediaPlayer.controls.stop();
         }
 
         /// <summary>
@@ -214,6 +225,7 @@ namespace SecondRealipony
             }
 
             currentSegment.Draw(span);
+            currentSegment.ProcessMusic(mediaPlayer);
 
             if (VideoMode)
             {

@@ -11,6 +11,7 @@ namespace SecondRealipony
     {
         public override float EndBeat { get { return 20; } }
         public override string MusicName { get { return "EndSecondHalf.wav"; } }
+        public override double MusicCue { get { return 411.433333; } }
 
         Texture2D picture;
         BasicEffect basicEffect;

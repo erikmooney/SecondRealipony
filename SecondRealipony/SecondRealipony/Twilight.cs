@@ -11,6 +11,7 @@ namespace SecondRealipony
     {
         public override float EndBeat { get { return 78; } }
         public override string MusicName { get { return "twilight.wav"; } }
+        public override double MusicCue { get { return 59.6333333; } }
 
         BasicEffect basicEffect;
         AlphaTestEffect alphaTestEffect;        //need this because the scrolls have small transparent notches

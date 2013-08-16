@@ -32,6 +32,7 @@ namespace SecondRealipony
         public override float BeatLength { get { return 60F / 125F; } }
         public override float EndBeat { get { return 137-32; } }
         public override string MusicName { get { return "intro.wav"; } }
+        public override double MusicCue { get { return 0; } }
 
         public Intro(Game game)
             : base(game)

@@ -14,9 +14,8 @@ namespace SecondRealipony
     {
         protected GraphicsDevice device;
         protected bool musicStarted = false;
-        protected Song song;
         protected Thread StartupThread;
-        
+
         public float Beat { get; protected set; }
 
         //Most segments are 130bpm, so specify this here unless overridden
@@ -34,17 +33,33 @@ namespace SecondRealipony
         //Delay music (only used by title screen)
         public virtual float MusicDelay { get { return 0; } }
 
+        //Music cue point
+        public abstract double MusicCue { get; }
+
         //Workhorse method into each segment class
         protected abstract void DrawSegment();
 
         public SRSegment(Game game)
         {
             device = game.GraphicsDevice;
-            song = game.Content.Load<Song>("music/" + MusicName);
-            
-            ///Workaround to preload songs in the media player 
-            MediaPlayer.Play(song);
-            MediaPlayer.Pause();
+        }
+
+        public void ProcessMusic(WMPLib.WindowsMediaPlayer mediaPlayer)
+        {
+            if (!musicStarted)
+            {
+                if (Beat + Anacrusis >= MusicDelay)
+                {
+                    mediaPlayer.settings.volume = 50;
+                    mediaPlayer.controls.currentPosition = MusicCue;
+                    mediaPlayer.controls.play();
+                    musicStarted = true;
+                }
+                else
+                {
+                    mediaPlayer.controls.stop();
+                }
+            }
         }
 
         public bool IsComplete(TimeSpan span)
@@ -71,13 +86,6 @@ namespace SecondRealipony
         public void Draw(TimeSpan span)
         {
             Beat = (float)span.TotalSeconds / BeatLength - Anacrusis;
-
-            if (!musicStarted && Beat + Anacrusis >= MusicDelay)
-            {
-                MediaPlayer.Play(song);
-                musicStarted = true;
-            }
-
             DrawSegment();
         }
 

@@ -31,6 +31,7 @@ namespace SecondRealipony
         public override float Anacrusis { get { return 2; } }
         public override float EndBeat { get { return 100; } }
         public override string MusicName { get { return "applejack.wav"; } }
+        public override double MusicCue { get { return 202.766666; } }
 
         public Applejack(Game game)
             : base(game)

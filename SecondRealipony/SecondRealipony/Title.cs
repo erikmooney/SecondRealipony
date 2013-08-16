@@ -15,6 +15,7 @@ namespace SecondRealipony
         public override float EndBeat { get { return 16; } }
         public override string MusicName { get { return "title.wav"; } }
         public override float MusicDelay { get { return 4; } }
+        public override double MusicCue { get { return 52.2333333; } }
 
         public Title(Game game)
             : base(game)

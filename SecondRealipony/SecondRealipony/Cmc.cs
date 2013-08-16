@@ -11,6 +11,7 @@ namespace SecondRealipony
     {
         public override float EndBeat { get { return 80; } }
         public override string MusicName { get { return "cmc.wav"; } }
+        public override double MusicCue { get { return 249.85; } }
 
         Texture2D texture;
         Color[] textureColors;

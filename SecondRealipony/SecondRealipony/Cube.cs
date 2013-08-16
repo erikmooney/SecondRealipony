@@ -22,6 +22,7 @@ namespace SecondRealipony
         public override float BeatLength { get { return 60F / 130; } }
         public override float EndBeat { get { return 64; } }
         public override string MusicName { get { return "cube.wav"; } }
+        public override double MusicCue { get { return 286.7833333; } }
 
         public Cube(Game game) : base(game)
         {
